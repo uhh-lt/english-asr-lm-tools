@@ -6,7 +6,7 @@ model = pickle.load(open(xgb_model_path, "rb"))
 
 normalizer = TTSTextNormalization.classification.Test()
 
-df = normalizer.predict(model, ["On", "22th November 1999", "the" ,"fastest", "swimmer", "was", "25 km/h", ".", "It", "was", "22:59",".", "CO2", "is", "bad", "!", "22th", "November", "1999"])
+df = normalizer.predict(model, ["On", "22th November 1999", "the" ,"fastest", "swimmer", "was", "100%", "25 km/h", ".", "It", "was", "22:59",".", "CO2", "is", "bad", "!", "22th", "November", "1999"])
 result = normalizer.convert(df)
 
 result_str = ' '.join(result["cust_after"])
