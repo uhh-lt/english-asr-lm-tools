@@ -22,7 +22,7 @@ def replaceShortforms(line):
 
 def punctuation(line, punctuation=False):
     line = re.sub(' +', ' ', line)
-    marks = (':', ',', '.', ';', '?', '!', '-')
+    marks = (',', '.', '?', '!', '-') # ; :
     if punctuation:
         for mark in marks:
             line = line.replace(' ' + mark, mark)
