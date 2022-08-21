@@ -6,7 +6,7 @@ destinationFolder = 'pileSorted'
 
 # {'ArXiv', 'BookCorpus2', 'Books3', 'DM Mathematics', 'Enron Emails', 'EuroParl', 'FreeLaw', 'Github', 'Gutenberg (PG-19)', 'HackerNews', 'NIH ExPorter', 'OpenSubtitles', 'OpenWebText2', 'Pile-CC', 'PhilPapers', 'PubMed Central', 'PubMed Abstracts', 'StackExchange', 'Ubuntu IRC', 'USPTO Backgrounds', 'Wikipedia (en)', 'YoutubeSubtitles'}
 
-# The parts of the dataset which are saved into new files
+# The parts of the dataset which are saved into seperate files
 keep = ['EuroParl', 'YoutubeSubtitles', 'Wikipedia (en)']
 
 if not os.path.exists(destinationFolder):
@@ -36,7 +36,9 @@ for a in range(0,30):
     print(f'Writing sorted data from {filename}')
 
     for meta in sentencedict:
-        open(f'{destinationFolder}/{meta}_{a}', 'a').write(str(sentencedict[meta]))
+        with open(f'{destinationFolder}/{meta}_{a}', 'a') as output:
+            part = '\n'.join(sentencedict[meta])
+            output.write(part)
 
     print(f'Finished processing {filename}')
 
