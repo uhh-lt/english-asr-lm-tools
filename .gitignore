@@ -1,24 +1,4 @@
 pile/
+pileSorted/
 env/
-ArXiv*
-EuroParl*
-OpenSubtitles*
-OpenWebText*
-YoutubeSubtitles*
-BookCorpus*
-Books*
-DM Mathematics*
-Enron Emails*
-FreeLaw*
-Github*
-Gutenberg (PG-19)*
-HackerNews*
-NIH ExPorter*
-PhilPapers*
-Pile-CC*
-PubMed*
-StackExchange*
-Ubuntu IRC*
-USPTO Backgrounds*
-Wikipedia (en)*
 wikipedia/
