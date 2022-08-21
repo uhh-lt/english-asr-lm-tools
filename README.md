@@ -7,6 +7,7 @@ These tools work best with the Pile dataset: https://pile.eleuther.ai/
 
 ## Requirements
 At least one (or more!) terabyte of free space because the Pile is decompressed 825GB large and some of the following steps create copys of the dataset.
+Due to the multiprocessing plenty a lot of RAM and CPUs are also recommended.
 
 ZST library to decompress the Pile
 ```
@@ -17,6 +18,7 @@ Create and start a virtual environment
 virtualenv -p python3.9 env
 source env/bin/active
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 ```
 ## Download and decompress Files
 At first download and decompress the Pile:
