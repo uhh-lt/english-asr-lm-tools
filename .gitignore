@@ -2,3 +2,5 @@ pile/
 pileSorted/
 env/
 wikipedia/
+*.bz2
+*.tar
