@@ -7,7 +7,7 @@ destinationFolder = 'pileSorted'
 # {'ArXiv', 'BookCorpus2', 'Books3', 'DM Mathematics', 'Enron Emails', 'EuroParl', 'FreeLaw', 'Github', 'Gutenberg (PG-19)', 'HackerNews', 'NIH ExPorter', 'OpenSubtitles', 'OpenWebText2', 'Pile-CC', 'PhilPapers', 'PubMed Central', 'PubMed Abstracts', 'StackExchange', 'Ubuntu IRC', 'USPTO Backgrounds', 'Wikipedia (en)', 'YoutubeSubtitles'}
 
 # The parts of the dataset which are saved into seperate files
-keep = ['EuroParl', 'YoutubeSubtitles', 'Wikipedia (en)']
+keep = ['YoutubeSubtitles']
 
 if not os.path.exists(destinationFolder):
     os.makedirs(destinationFolder)
