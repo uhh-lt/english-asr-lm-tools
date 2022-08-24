@@ -50,3 +50,20 @@ The resulting files can be concatenated to one file.
 ```
 cat ytClean/* > YouTubeClean
 ```
+
+## Wikipedia Articles
+To prepare Wikipedia articles we use an older version of the [wikiextractor](https://github.com/attardi/wikiextractor).
+```
+wget https://github.com/attardi/wikiextractor/archive/f8282ab41090f94b7dfd17ce58a985f537db6c21.zip
+unzip -j f8282ab41090f94b7dfd17ce58a985f537db6c21.zip -d wikiextractor
+```
+For output we create the folder `wikipedia` and run the extractor
+```
+mkdir wikipedia
+python wikiextractor/WikiExtractor.py -o wikipedia/ --processes 36 --filter_disambig_pages --min_text_length 0 --compress --bytes 128M --ignored_tags abbr,b,big --no_templates -q enwiki-latest-pages-articles-multistream.xml.bz2
+```
+Now these files can be cleaned:
+```
+python wikipediacleanup.py
+```
+This read the files in `wikipedia/` and copys the processed files into `wikiclean`. This runs by default with 40 processes.

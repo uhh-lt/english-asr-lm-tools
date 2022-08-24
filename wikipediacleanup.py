@@ -2,6 +2,7 @@ import cleanupTools
 from spacy.tokenizer import Tokenizer
 from spacy.lang.en import English
 from bz2 import BZ2File as bzopen
+import argparse
 import multiprocessing
 import re
 import os
@@ -9,10 +10,6 @@ import os
 # Tokenizer
 nlpT = English()
 tokenizer = nlpT.tokenizer
-
-folder = 'wikipedia/'
-
-processes = 40 # Number of processes
 
 def readFile(filename):
     content = []
@@ -46,26 +43,26 @@ def normalization(content):
             line = cleanupTools.rulesForCommonWords(line)
             tokens = tokenizer(line)
             # print(f'{line = }')
-            line = normalizer.normalization(tokens)
+            try:
+                line = normalizer.normalization(tokens)
+            except:
+                continue
             line = line.replace('\n', '')
             if line.isspace():
                 continue
             if not any(x for x in line if x.isnumeric()):
                 line = cleanupTools.replaceShortforms(line)
-                line = cleanupTools.punctuation(line)
+                line = cleanupTools.punctuation(line, punctuation)
             else:
-                print(line)
                 continue
             if not any(x for x in line if x.isalpha()):
                 continue
-            if any(x in line for x in ('-', '.', ',', '<', '>', '§', '/', '*', '°')):
+            if any(x in line for x in ('-', '<', '>', '§', '/', '*', '°')):
                 continue
             if len(line.split(' ')) < 3: # remove short lines
                 continue
             if not re.findall("[\s']\S[\s']\S[\s']\S", line): # Catches words like "m i d d a's"
                 temp.append(line.lower())
-            else:
-                print(line)
 
     text = '\n'.join(str(elem) for elem in temp)
     return text
@@ -81,20 +78,31 @@ def completeRun(filename):
     writeFile(text, filename)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', type=str, required=False, default='wikipedia', help='changes the source folder')
+    parser.add_argument('-o', '--output', type=str, required=False, default='wikiclean', help='changes the destination folder')
+    parser.add_argument('-p', '--punctuation', type=bool, required=False, default=False, help='Remove(default) or preserve punctuation')
+    parser.add_argument('-n', '--number', type=int, required=False, default=40, help='Number of multiprocessing tasks')
+    args = parser.parse_args()
+    input = args.input
+    output = args.output
+    punctuation = args.punctuation
+    processes = args.number
+    
     wikifiles =[]
-    for subdir, dirs, files in os.walk(folder):
+    for subdir, dirs, files in os.walk(input):
         for file in files:
-            #print os.path.join(subdir, file)
             filepath = subdir + os.sep + file
 
             if filepath.endswith(".bz2"):
                 wikifiles.append(filepath)
-    print(wikifiles)
-    
+
+    # Create output folders
+    if not os.path.exists(output):
+        os.makedirs(f'{output}/wikipedia/AA')
+        os.makedirs(f'{output}/wikipedia/AB')
+        os.makedirs(f'{output}/wikipedia/AC')
+
     pool = multiprocessing.Pool(processes)
     subtitles = pool.map(completeRun, wikifiles)
-
-    # content = readFile('wikiclean/AA/wiki_00.bz2')
-    # sentences = splitArticle(content)
-    # sentences = normalization(sentences)
-    # writeFile(sentences)
+    pool.close()
