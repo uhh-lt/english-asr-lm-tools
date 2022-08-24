@@ -67,3 +67,7 @@ Now these files can be cleaned:
 python wikipediacleanup.py
 ```
 This read the files in `wikipedia/` and copys the processed files into `wikiclean`. This runs by default with 40 processes.
+The resulting files in `wikiclean` can be concatenated to one file
+```
+cat wikiclean/wikipedia/*/* > WikipediaClean
+```
